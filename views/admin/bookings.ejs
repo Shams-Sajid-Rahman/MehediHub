@@ -1,0 +1,46 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:#333;">All Bookings</h4>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Artist</th>
+          <th>Service</th>
+          <th>Event Date</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (bookings.length === 0) { %>
+        <tr><td colspan="7" class="text-center text-muted py-4">No bookings yet.</td></tr>
+        <% } %>
+        <% bookings.forEach(b => { %>
+        <tr>
+          <td class="text-muted small">#<%= b.id %></td>
+          <td>
+            <div class="fw-semibold small"><%= b.customer_name %></div>
+            <div class="text-muted" style="font-size:0.75rem;"><%= b.customer_email %></div>
+          </td>
+          <td class="small"><%= b.artist_name %></td>
+          <td class="small"><%= b.service_title %></td>
+          <td class="small"><%= new Date(b.event_date).toLocaleDateString('en-BD') %></td>
+          <td>৳<%= b.total_price %></td>
+          <td>
+            <span class="badge <%=
+              b.status === 'completed' ? 'bg-success' :
+              b.status === 'confirmed' ? 'bg-primary' :
+              b.status === 'pending' ? 'bg-warning text-dark' :
+              b.status === 'cancelled' ? 'bg-secondary' : 'bg-danger' %>">
+              <%= b.status %>
+            </span>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

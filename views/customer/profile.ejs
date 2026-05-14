@@ -1,0 +1,45 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:var(--primary);">My Profile</h4>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm p-4 text-center">
+      <div style="width:100px;height:100px;border-radius:50%;margin:0 auto 1rem;overflow:hidden;border:3px solid var(--accent);">
+        <% if (user.profile_image) { %>
+          <img src="<%= user.profile_image %>" class="w-100 h-100" style="object-fit:cover;" />
+        <% } else { %>
+          <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background:var(--accent);font-size:2.5rem;color:var(--primary);">
+            <i class="bi bi-person-fill"></i>
+          </div>
+        <% } %>
+      </div>
+      <h5 class="fw-semibold"><%= user.full_name %></h5>
+      <p class="text-muted small"><%= user.email %></p>
+      <span class="badge" style="background:var(--accent);color:#3a1a00;">Customer</span>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card border-0 shadow-sm p-4">
+      <h6 class="fw-semibold mb-4">Edit Profile</h6>
+      <form action="/customer/profile" method="POST" enctype="multipart/form-data">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Full Name</label>
+            <input type="text" name="full_name" class="form-control" value="<%= user.full_name %>" required />
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Phone</label>
+            <input type="text" name="phone" class="form-control" value="<%= user.phone || '' %>" />
+          </div>
+          <div class="col-12">
+            <label class="form-label small fw-semibold">Profile Photo</label>
+            <input type="file" name="profile_image" class="form-control form-control-sm" accept="image/*" />
+          </div>
+        </div>
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary-custom">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

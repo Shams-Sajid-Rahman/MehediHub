@@ -1,0 +1,87 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:#333;">Admin Dashboard</h4>
+
+<!-- Stat Cards -->
+<div class="row g-4 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4 h-100" style="border-left:4px solid var(--primary)!important;">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <div class="text-muted small">Total Users</div>
+          <div class="h3 fw-bold mb-0"><%= stats.totalUsers %></div>
+        </div>
+        <i class="bi bi-people" style="font-size:2rem;color:var(--primary);opacity:0.5;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4 h-100" style="border-left:4px solid #28a745!important;">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <div class="text-muted small">Artists / Customers</div>
+          <div class="h3 fw-bold mb-0"><%= stats.totalArtists %> / <%= stats.totalCustomers %></div>
+        </div>
+        <i class="bi bi-palette" style="font-size:2rem;color:#28a745;opacity:0.5;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4 h-100" style="border-left:4px solid #ffc107!important;">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <div class="text-muted small">Pending Verifications</div>
+          <div class="h3 fw-bold mb-0"><%= stats.pendingVerifications %></div>
+        </div>
+        <a href="/admin/pending-verifications" class="btn btn-sm btn-warning">Review</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4 h-100" style="border-left:4px solid #17a2b8!important;">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <div class="text-muted small">Total Revenue</div>
+          <div class="h3 fw-bold mb-0">৳<%= Number(stats.revenue).toLocaleString('en-BD') %></div>
+        </div>
+        <i class="bi bi-currency-dollar" style="font-size:2rem;color:#17a2b8;opacity:0.5;"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm p-4 h-100" style="border-left:4px solid #6f42c1!important;">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h6 class="fw-semibold mb-0">Bookings</h6>
+        <a href="/admin/bookings" class="btn btn-sm btn-outline-secondary">View All</a>
+      </div>
+      <div class="h2 fw-bold" style="color:#6f42c1;"><%= stats.totalBookings %></div>
+      <div class="text-muted small">Total booking requests</div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm p-4 h-100" style="border-left:4px solid #fd7e14!important;">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h6 class="fw-semibold mb-0">Orders</h6>
+        <a href="/admin/orders" class="btn btn-sm btn-outline-secondary">View All</a>
+      </div>
+      <div class="h2 fw-bold" style="color:#fd7e14;"><%= stats.totalOrders %></div>
+      <div class="text-muted small">Total product orders</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Links -->
+<div class="row g-3 mt-2">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm p-3">
+      <h6 class="fw-semibold mb-3">Quick Actions</h6>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="/admin/pending-verifications" class="btn btn-warning btn-sm"><i class="bi bi-person-check me-1"></i>Review Verifications</a>
+        <a href="/admin/users" class="btn btn-outline-primary btn-sm"><i class="bi bi-people me-1"></i>Manage Users</a>
+        <a href="/admin/products" class="btn btn-outline-secondary btn-sm"><i class="bi bi-bag me-1"></i>Manage Products</a>
+        <a href="/admin/reviews" class="btn btn-outline-danger btn-sm"><i class="bi bi-star me-1"></i>Moderate Reviews</a>
+      </div>
+    </div>
+  </div>
+</div>

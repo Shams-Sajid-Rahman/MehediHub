@@ -1,0 +1,82 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:var(--primary);">My Profile</h4>
+
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm p-4 text-center">
+      <div style="width:100px;height:100px;border-radius:50%;margin:0 auto 1rem;overflow:hidden;border:3px solid var(--accent);">
+        <% if (user.profile_image) { %>
+          <img src="<%= user.profile_image %>" class="w-100 h-100" style="object-fit:cover;" alt="Profile" />
+        <% } else { %>
+          <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background:var(--accent);font-size:2.5rem;color:var(--primary);">
+            <i class="bi bi-person-fill"></i>
+          </div>
+        <% } %>
+      </div>
+      <h5 class="fw-semibold"><%= user.full_name %></h5>
+      <p class="text-muted small"><%= user.email %></p>
+      <% if (artist && artist.average_rating > 0) { %>
+      <div class="mb-2">
+        <% for (let i = 1; i <= 5; i++) { %>
+          <i class="bi bi-star<%= i <= Math.round(artist.average_rating) ? '-fill' : '' %>" style="color:var(--accent);"></i>
+        <% } %>
+        <span class="text-muted small"><%= Number(artist.average_rating).toFixed(1) %></span>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card border-0 shadow-sm p-4">
+      <h6 class="fw-semibold mb-4">Edit Profile</h6>
+      <form action="/artist/profile" method="POST" enctype="multipart/form-data">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Full Name</label>
+            <input type="text" name="full_name" class="form-control" value="<%= user.full_name %>" required />
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Phone</label>
+            <input type="text" name="phone" class="form-control" value="<%= user.phone || '' %>" />
+          </div>
+          <div class="col-12">
+            <label class="form-label small fw-semibold">Bio</label>
+            <textarea name="bio" class="form-control" rows="3" placeholder="Tell customers about yourself..."><%= artist ? artist.bio || '' : '' %></textarea>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">District</label>
+            <input type="text" name="district" class="form-control" value="<%= artist ? artist.district || '' : '' %>" placeholder="e.g. Dhaka" />
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Location</label>
+            <input type="text" name="location" class="form-control" value="<%= artist ? artist.location || '' : '' %>" placeholder="e.g. Mirpur-10, Dhaka" />
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Specialization</label>
+            <input type="text" name="specialization" class="form-control" value="<%= artist ? artist.specialization || '' : '' %>" placeholder="e.g. Bridal, Arabic, Party" />
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label small fw-semibold">Experience (years)</label>
+            <input type="number" name="experience_years" class="form-control" value="<%= artist ? artist.experience_years || 0 : 0 %>" min="0" />
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label small fw-semibold">Hourly Rate (৳)</label>
+            <input type="number" name="hourly_rate" class="form-control" value="<%= artist ? artist.hourly_rate || 0 : 0 %>" min="0" step="50" />
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label small fw-semibold">Profile Photo</label>
+            <input type="file" name="profile_image" class="form-control form-control-sm" accept="image/*" />
+          </div>
+          <div class="col-sm-6 d-flex align-items-end pb-1">
+            <div class="form-check">
+              <input type="checkbox" name="is_available" id="is_available" class="form-check-input" <%= artist && artist.is_available ? 'checked' : '' %> />
+              <label class="form-check-label" for="is_available">Available for bookings</label>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary-custom">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

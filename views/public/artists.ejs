@@ -1,0 +1,106 @@
+<div class="container py-5">
+  <div class="row g-4">
+    <!-- Filters Sidebar -->
+    <div class="col-lg-3">
+      <div class="card border-0 shadow-sm p-4 sticky-top" style="top:80px;">
+        <h5 class="fw-semibold mb-4" style="color:var(--primary);">Filter Artists</h5>
+        <form method="GET" action="/artists">
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">District</label>
+            <select name="district" class="form-select form-select-sm">
+              <option value="">All Districts</option>
+              <% districts.forEach(d => { %>
+                <option value="<%= d %>" <%= filters.district === d ? 'selected' : '' %>><%= d %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Specialization</label>
+            <select name="specialization" class="form-select form-select-sm">
+              <option value="">All Types</option>
+              <option value="Bridal" <%= filters.specialization === 'Bridal' ? 'selected' : '' %>>Bridal</option>
+              <option value="Arabic" <%= filters.specialization === 'Arabic' ? 'selected' : '' %>>Arabic</option>
+              <option value="Indian" <%= filters.specialization === 'Indian' ? 'selected' : '' %>>Indian</option>
+              <option value="Party" <%= filters.specialization === 'Party' ? 'selected' : '' %>>Party</option>
+              <option value="Simple" <%= filters.specialization === 'Simple' ? 'selected' : '' %>>Simple</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Min Rating</label>
+            <select name="minRating" class="form-select form-select-sm">
+              <option value="">Any</option>
+              <option value="3" <%= filters.minRating === '3' ? 'selected' : '' %>>3+ Stars</option>
+              <option value="4" <%= filters.minRating === '4' ? 'selected' : '' %>>4+ Stars</option>
+              <option value="4.5" <%= filters.minRating === '4.5' ? 'selected' : '' %>>4.5+ Stars</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="form-label small fw-semibold">Max Hourly Rate (৳)</label>
+            <input type="number" name="maxRate" class="form-control form-control-sm" placeholder="e.g. 2000" value="<%= filters.maxRate || '' %>" />
+          </div>
+          <button type="submit" class="btn btn-primary-custom w-100">Apply Filters</button>
+          <a href="/artists" class="btn btn-outline-secondary w-100 mt-2 btn-sm">Clear</a>
+        </form>
+      </div>
+    </div>
+
+    <!-- Artists Grid -->
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 style="color:var(--primary);font-family:'Playfair Display',serif;">
+          <% if (filters.district) { %><%= filters.district %> Artists<% } else { %>All Verified Artists<% } %>
+        </h4>
+        <span class="text-muted small"><%= artists.length %> artist(s) found</span>
+      </div>
+
+      <% if (artists.length === 0) { %>
+        <div class="text-center py-5">
+          <div style="font-size:4rem;opacity:0.3;">🔍</div>
+          <h5 class="text-muted mt-3">No artists found matching your filters.</h5>
+          <a href="/artists" class="btn btn-primary-custom mt-3">View All Artists</a>
+        </div>
+      <% } else { %>
+        <div class="row g-4">
+          <% artists.forEach(artist => { %>
+          <div class="col-sm-6 col-xl-4">
+            <div class="card artist-card border-0 shadow-sm h-100">
+              <div class="card-body text-center p-4">
+                <div class="artist-avatar mb-3" style="width:80px;height:80px;border-radius:50%;margin:0 auto;overflow:hidden;border:3px solid var(--accent);">
+                  <% if (artist.profile_image) { %>
+                    <img src="<%= artist.profile_image %>" alt="<%= artist.full_name %>" class="w-100 h-100" style="object-fit:cover;" />
+                  <% } else { %>
+                    <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background:var(--accent);font-size:2rem;color:var(--primary);">
+                      <i class="bi bi-person-fill"></i>
+                    </div>
+                  <% } %>
+                </div>
+                <h5 class="fw-semibold mb-1"><%= artist.full_name %></h5>
+                <p class="text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i><%= artist.location || artist.district || 'Bangladesh' %></p>
+                <div class="mb-2">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <i class="bi bi-star<%= i <= Math.round(artist.average_rating) ? '-fill' : '' %>" style="color:var(--accent);font-size:0.8rem;"></i>
+                  <% } %>
+                  <span class="text-muted small ms-1"><%= Number(artist.average_rating).toFixed(1) %> (<%= artist.total_reviews %>)</span>
+                </div>
+                <p class="text-muted small mb-2"><%= (artist.specialization || '').substring(0, 60) %></p>
+                <p class="small mb-3"><i class="bi bi-clock me-1" style="color:var(--primary);"></i><%= artist.experience_years %> years exp.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold" style="color:var(--primary);">৳<%= artist.hourly_rate %>/hr</span>
+                  <a href="/artists/<%= artist.id %>" class="btn btn-sm btn-primary-custom">View</a>
+                </div>
+              </div>
+              <div class="card-footer border-0 pt-0 px-4 pb-3">
+                <% if (artist.is_available) { %>
+                  <span class="badge bg-success w-100 py-1"><i class="bi bi-check-circle me-1"></i>Available</span>
+                <% } else { %>
+                  <span class="badge bg-secondary w-100 py-1">Currently Unavailable</span>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

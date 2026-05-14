@@ -1,0 +1,31 @@
+{
+  "name": "mehedihub",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "setup-db": "node scripts/setup-db.js"
+  },
+  "keywords": ["mehedi", "henna", "bangladesh", "marketplace"],
+  "author": "MehediHub",
+  "license": "ISC",
+  "description": "A marketplace connecting Mehedi (henna) artists with customers in Bangladesh",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "method-override": "^3.0.0",
+    "multer": "^2.1.1",
+    "mysql2": "^3.22.3",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

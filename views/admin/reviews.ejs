@@ -1,0 +1,41 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:#333;">Manage Reviews</h4>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Rating</th>
+          <th>Comment</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (reviews.length === 0) { %>
+        <tr><td colspan="6" class="text-center text-muted py-4">No reviews found.</td></tr>
+        <% } %>
+        <% reviews.forEach(r => { %>
+        <tr>
+          <td class="fw-semibold small"><%= r.customer_name %></td>
+          <td><span class="badge <%= r.target_type === 'artist' ? 'bg-primary' : 'bg-info' %>"><%= r.target_type %></span></td>
+          <td>
+            <% for (let i = 1; i <= 5; i++) { %>
+              <i class="bi bi-star<%= i <= r.rating ? '-fill' : '' %>" style="color:var(--accent);font-size:0.75rem;"></i>
+            <% } %>
+          </td>
+          <td class="text-muted small"><%= (r.comment || '—').substring(0, 80) %></td>
+          <td class="text-muted small"><%= new Date(r.created_at).toLocaleDateString('en-BD') %></td>
+          <td>
+            <form action="/admin/reviews/<%= r.id %>/delete" method="POST" onsubmit="return confirm('Delete this review?')">
+              <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

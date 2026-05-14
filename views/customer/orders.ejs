@@ -1,0 +1,53 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:var(--primary);">My Orders</h4>
+
+<% if (orders.length === 0) { %>
+  <div class="card border-0 shadow-sm p-5 text-center">
+    <i class="bi bi-box-seam mb-3" style="font-size:3rem;color:var(--primary);opacity:0.4;"></i>
+    <h5>No orders yet</h5>
+    <p class="text-muted">Browse our Mehedi supplies and place your first order.</p>
+    <a href="/products" class="btn btn-primary-custom mx-auto" style="width:fit-content;">Shop Now</a>
+  </div>
+<% } else { %>
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead style="background:#fff8f0;">
+          <tr>
+            <th>Order ID</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(o => { %>
+          <tr>
+            <td><code>#<%= o.id %></code></td>
+            <td class="text-muted small"><%= o.item_count %> item(s)</td>
+            <td class="fw-semibold" style="color:var(--primary);">৳<%= o.total_amount %></td>
+            <td>
+              <span class="badge <%=
+                o.status === 'delivered' ? 'bg-success' :
+                o.status === 'shipped' ? 'bg-primary' :
+                o.status === 'confirmed' ? 'bg-info' :
+                o.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary' %>">
+                <%= o.status %>
+              </span>
+            </td>
+            <td class="text-muted small"><%= new Date(o.created_at).toLocaleDateString('en-BD') %></td>
+            <td>
+              <% if (o.status === 'pending') { %>
+              <form action="/customer/orders/<%= o.id %>/cancel" method="POST" onsubmit="return confirm('Cancel this order?')">
+                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2">Cancel</button>
+              </form>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% } %>

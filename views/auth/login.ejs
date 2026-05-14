@@ -1,0 +1,59 @@
+<div class="container py-5" style="min-height:70vh;display:flex;align-items:center;">
+  <div class="row w-100 justify-content-center">
+    <div class="col-md-5 col-lg-4">
+      <div class="card border-0 shadow p-4">
+        <div class="text-center mb-4">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--primary);">
+            <i class="bi bi-flower1 me-2"></i>Welcome Back
+          </h3>
+          <p class="text-muted small">Sign in to your MehediHub account</p>
+        </div>
+        <form action="/login" method="POST">
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Email Address</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <input type="email" name="email" id="login-email" class="form-control" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input type="password" name="password" id="login-password" class="form-control" placeholder="Your password" required autocomplete="current-password" />
+              <button type="button" class="btn btn-outline-secondary" id="toggle-password" tabindex="-1" title="Show / hide password">
+                <i class="bi bi-eye" id="toggle-password-icon"></i>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="form-check">
+              <input type="checkbox" name="remember_me" id="remember_me" class="form-check-input" />
+              <label class="form-check-label small" for="remember_me">Remember me</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+          </button>
+        </form>
+        <p class="text-center text-muted small mb-0">
+          Don't have an account? <a href="/register" style="color:var(--primary);">Register here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.getElementById('toggle-password').addEventListener('click', function () {
+  const input = document.getElementById('login-password');
+  const icon  = document.getElementById('toggle-password-icon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.replace('bi-eye', 'bi-eye-slash');
+  } else {
+    input.type = 'password';
+    icon.classList.replace('bi-eye-slash', 'bi-eye');
+  }
+  input.focus();
+});
+</script>

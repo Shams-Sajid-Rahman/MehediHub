@@ -1,0 +1,45 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:#333;">Manage Artists</h4>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr>
+          <th>Artist</th>
+          <th>District</th>
+          <th>Specialization</th>
+          <th>Rating</th>
+          <th>Hourly Rate</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (artists.length === 0) { %>
+        <tr><td colspan="7" class="text-center text-muted py-4">No artists found.</td></tr>
+        <% } %>
+        <% artists.forEach(artist => { %>
+        <tr>
+          <td>
+            <div class="fw-semibold"><%= artist.full_name %></div>
+            <div class="text-muted small"><%= artist.email %></div>
+          </td>
+          <td><%= artist.district || '—' %></td>
+          <td class="small"><%= (artist.specialization || '—').substring(0, 30) %></td>
+          <td>
+            <% for (let i = 1; i <= 5; i++) { %>
+              <i class="bi bi-star<%= i <= Math.round(artist.average_rating) ? '-fill' : '' %>" style="color:var(--accent);font-size:0.75rem;"></i>
+            <% } %>
+            <span class="text-muted small ms-1"><%= Number(artist.average_rating).toFixed(1) %></span>
+          </td>
+          <td>৳<%= artist.hourly_rate %>/hr</td>
+          <td><span class="badge <%= artist.status === 'active' ? 'bg-success' : 'bg-warning text-dark' %>"><%= artist.status %></span></td>
+          <td>
+            <a href="/artists/<%= artist.id %>" target="_blank" class="btn btn-sm btn-outline-secondary py-0 px-2">View</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

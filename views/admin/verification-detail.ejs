@@ -1,0 +1,111 @@
+<div class="d-flex align-items-center gap-3 mb-4">
+  <a href="/admin/pending-verifications" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>Back
+  </a>
+  <h4 class="mb-0" style="font-family:'Playfair Display',serif;color:#333;">NID Verification Review</h4>
+</div>
+
+<div class="row g-4">
+  <!-- User Info -->
+  <div class="col-md-5">
+    <div class="card border-0 shadow-sm p-4 mb-4">
+      <h6 class="fw-semibold mb-3">Registrant Information</h6>
+      <table class="table table-sm table-borderless">
+        <tr><td class="text-muted small">Name</td><td class="fw-semibold"><%= verification.full_name %></td></tr>
+        <tr><td class="text-muted small">Email</td><td><%= verification.email %></td></tr>
+        <tr><td class="text-muted small">Role</td><td><span class="badge <%= verification.role === 'artist' ? 'bg-primary' : 'bg-info' %>"><%= verification.role %></span></td></tr>
+      </table>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4 mb-4">
+      <h6 class="fw-semibold mb-3">Extracted NID Data</h6>
+      <table class="table table-sm table-borderless">
+        <tr><td class="text-muted small">NID Number</td><td><code><%= verification.nid_number %></code></td></tr>
+        <tr><td class="text-muted small">Name</td><td><%= verification.name_on_nid || '—' %></td></tr>
+        <tr><td class="text-muted small">Date of Birth</td><td><%= verification.date_of_birth ? new Date(verification.date_of_birth).toLocaleDateString('en-BD') : '—' %></td></tr>
+        <tr><td class="text-muted small">Father</td><td><%= verification.father_name || '—' %></td></tr>
+        <tr><td class="text-muted small">Mother</td><td><%= verification.mother_name || '—' %></td></tr>
+        <tr><td class="text-muted small">Address</td><td><%= verification.address || '—' %></td></tr>
+      </table>
+    </div>
+
+    <!-- OCR Raw Text -->
+    <div class="card border-0 shadow-sm p-4 mb-4">
+      <h6 class="fw-semibold mb-3">OCR Raw Output</h6>
+      <details>
+        <summary class="text-muted small" style="cursor:pointer;">Show raw OCR text</summary>
+        <pre class="mt-2 p-2 rounded small" style="background:#f8f8f8;max-height:200px;overflow:auto;white-space:pre-wrap;font-size:0.7rem;"><%= verification.ocr_raw_text || 'No OCR data' %></pre>
+      </details>
+    </div>
+
+    <!-- Actions -->
+    <% if (verification.status === 'pending') { %>
+    <div class="card border-0 shadow-sm p-4">
+      <h6 class="fw-semibold mb-3">Decision</h6>
+      <form action="/admin/verifications/<%= verification.id %>/approve" method="POST" class="mb-2">
+        <button type="submit" class="btn btn-success w-100 mb-2" onclick="return confirm('Approve this user?')">
+          <i class="bi bi-check-circle me-2"></i>Approve Registration
+        </button>
+      </form>
+      <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
+        <i class="bi bi-x-circle me-2"></i>Reject Registration
+      </button>
+    </div>
+    <% } else { %>
+    <div class="card border-0 shadow-sm p-4">
+      <div class="alert mb-0 <%= verification.status === 'approved' ? 'alert-success' : 'alert-danger' %>">
+        <strong>Status: <%= verification.status.toUpperCase() %></strong>
+        <% if (verification.rejection_reason) { %>
+          <div class="mt-1 small">Reason: <%= verification.rejection_reason %></div>
+        <% } %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- NID Images -->
+  <div class="col-md-7">
+    <div class="card border-0 shadow-sm p-4">
+      <h6 class="fw-semibold mb-3">NID Images</h6>
+      <% if (verification.nid_front_image) { %>
+      <div class="mb-3">
+        <label class="form-label small text-muted">Front of NID</label>
+        <img src="<%= verification.nid_front_image %>" class="img-fluid rounded shadow-sm w-100" alt="NID Front" style="max-height:300px;object-fit:contain;background:#f5f5f5;" />
+      </div>
+      <% } %>
+      <% if (verification.nid_back_image) { %>
+      <div>
+        <label class="form-label small text-muted">Back of NID</label>
+        <img src="<%= verification.nid_back_image %>" class="img-fluid rounded shadow-sm w-100" alt="NID Back" style="max-height:300px;object-fit:contain;background:#f5f5f5;" />
+      </div>
+      <% } %>
+      <% if (!verification.nid_front_image && !verification.nid_back_image) { %>
+        <p class="text-muted">No NID images available.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<!-- Reject Modal -->
+<div class="modal fade" id="rejectModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title"><i class="bi bi-x-circle me-2"></i>Reject Verification</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="/admin/verifications/<%= verification.id %>/reject" method="POST">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Rejection Reason</label>
+            <textarea name="rejection_reason" class="form-control" rows="3" required placeholder="Explain why this registration is being rejected..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Confirm Rejection</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

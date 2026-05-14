@@ -1,0 +1,190 @@
+/* MehediHub Custom Theme */
+:root {
+  --primary: #B85C00;
+  --primary-dark: #7a3c00;
+  --accent: #F4A261;
+  --bg-warm: #FFF8F0;
+  --text-dark: #2c2c2c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  background: #fff;
+  font-size: 0.92rem;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Primary Button */
+.btn-primary-custom {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-primary-custom:hover {
+  background: var(--primary-dark);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.btn-primary-custom:active {
+  transform: translateY(0);
+}
+
+.btn-outline-primary-custom {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.btn-outline-primary-custom:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* text-primary-custom */
+.text-primary-custom {
+  color: var(--primary) !important;
+}
+
+/* Navbar */
+.navbar-brand-custom {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Cards */
+.artist-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 12px;
+}
+.artist-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(184, 92, 0, 0.15) !important;
+}
+
+.product-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 10px;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(184, 92, 0, 0.12) !important;
+}
+
+/* Form controls */
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.2rem rgba(244, 162, 97, 0.25);
+}
+
+/* Flash alerts */
+.alert {
+  border-radius: 8px;
+}
+
+/* Sidebar nav links */
+.sidebar-admin .nav-link {
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  transition: background 0.15s;
+}
+.sidebar-admin .nav-link:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff !important;
+}
+.sidebar-admin .nav-link.active {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Tables */
+.table th {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #555;
+}
+
+/* Badge override */
+.badge {
+  font-weight: 500;
+}
+
+/* Letter spacing utility */
+.letter-spacing {
+  letter-spacing: 0.1em;
+}
+
+/* Sticky top offset for inner pages */
+.sticky-top {
+  top: 80px;
+}
+
+/* Role card */
+.role-card {
+  border: 2px solid #e0e0e0 !important;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.role-card.selected,
+.role-card:hover {
+  border-color: var(--primary) !important;
+  background: #fff8f0;
+}
+
+/* Image hover zoom */
+.portfolio-img {
+  transition: transform 0.3s;
+  overflow: hidden;
+}
+.portfolio-img:hover img {
+  transform: scale(1.05);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+/* Hero pattern overlay */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Mobile responsive tweaks */
+@media (max-width: 768px) {
+  .sidebar-admin, nav.p-3.flex-shrink-0 {
+    display: none !important;
+  }
+  .d-flex.admin-layout main,
+  .d-flex main.flex-grow-1 {
+    width: 100%;
+  }
+}

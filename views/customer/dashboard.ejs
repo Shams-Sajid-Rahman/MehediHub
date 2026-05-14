@@ -1,0 +1,92 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:var(--primary);">Welcome, <%= currentUser.name.split(' ')[0] %>!</h4>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid var(--primary)!important;">
+      <div class="text-muted small">Total Bookings</div>
+      <div class="h3 fw-bold mb-0" style="color:var(--primary);"><%= stats.totalBookings %></div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid #ffc107!important;">
+      <div class="text-muted small">Active Bookings</div>
+      <div class="h3 fw-bold mb-0 text-warning"><%= stats.activeBookings %></div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid #28a745!important;">
+      <div class="text-muted small">Total Orders</div>
+      <div class="h3 fw-bold mb-0 text-success"><%= stats.totalOrders %></div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid var(--accent)!important;">
+      <div class="text-muted small">Cart Items</div>
+      <div class="h3 fw-bold mb-0" style="color:#B85C00;"><%= stats.cartCount %></div>
+      <% if (stats.cartCount > 0) { %><a href="/customer/cart" class="small" style="color:var(--primary);">View Cart</a><% } %>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm p-3">
+      <h6 class="fw-semibold mb-3">Quick Actions</h6>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="/artists" class="btn btn-primary-custom btn-sm"><i class="bi bi-search me-1"></i>Find Artists</a>
+        <a href="/products" class="btn btn-outline-primary-custom btn-sm"><i class="bi bi-shop me-1"></i>Shop Products</a>
+        <a href="/customer/bookings" class="btn btn-outline-secondary btn-sm"><i class="bi bi-calendar-check me-1"></i>My Bookings</a>
+        <a href="/customer/cart" class="btn btn-outline-secondary btn-sm"><i class="bi bi-cart3 me-1"></i>My Cart</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-semibold mb-0">Recent Bookings</h6>
+        <a href="/customer/bookings" class="btn btn-sm btn-outline-secondary">All</a>
+      </div>
+      <% if (recentBookings.length === 0) { %>
+        <p class="text-muted small">No bookings yet. <a href="/artists" style="color:var(--primary);">Find an artist!</a></p>
+      <% } else { %>
+        <% recentBookings.forEach(b => { %>
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+          <div>
+            <div class="small fw-semibold"><%= b.artist_name %></div>
+            <div class="text-muted" style="font-size:0.75rem;"><%= b.service_title %></div>
+          </div>
+          <span class="badge <%= b.status === 'completed' ? 'bg-success' : b.status === 'confirmed' ? 'bg-primary' : b.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary' %>">
+            <%= b.status %>
+          </span>
+        </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card border-0 shadow-sm p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-semibold mb-0">Recent Orders</h6>
+        <a href="/customer/orders" class="btn btn-sm btn-outline-secondary">All</a>
+      </div>
+      <% if (recentOrders.length === 0) { %>
+        <p class="text-muted small">No orders yet. <a href="/products" style="color:var(--primary);">Shop now!</a></p>
+      <% } else { %>
+        <% recentOrders.forEach(o => { %>
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+          <div>
+            <div class="small fw-semibold">Order #<%= o.id %></div>
+            <div class="text-muted" style="font-size:0.75rem;">৳<%= o.total_amount %></div>
+          </div>
+          <span class="badge <%= o.status === 'delivered' ? 'bg-success' : o.status === 'shipped' ? 'bg-primary' : o.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary' %>">
+            <%= o.status %>
+          </span>
+        </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</div>

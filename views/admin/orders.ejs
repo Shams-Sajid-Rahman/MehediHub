@@ -1,0 +1,43 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:#333;">All Orders</h4>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders.length === 0) { %>
+        <tr><td colspan="6" class="text-center text-muted py-4">No orders yet.</td></tr>
+        <% } %>
+        <% orders.forEach(o => { %>
+        <tr>
+          <td><code>#<%= o.id %></code></td>
+          <td>
+            <div class="fw-semibold small"><%= o.customer_name %></div>
+          </td>
+          <td class="text-muted small"><%= o.item_count %> item(s)</td>
+          <td class="fw-semibold" style="color:var(--primary);">৳<%= o.total_amount %></td>
+          <td>
+            <span class="badge <%=
+              o.status === 'delivered' ? 'bg-success' :
+              o.status === 'shipped' ? 'bg-primary' :
+              o.status === 'confirmed' ? 'bg-info' :
+              o.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary' %>">
+              <%= o.status %>
+            </span>
+          </td>
+          <td class="text-muted small"><%= new Date(o.created_at).toLocaleDateString('en-BD') %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

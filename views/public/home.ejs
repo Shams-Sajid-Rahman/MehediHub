@@ -1,0 +1,184 @@
+<!-- Hero Section -->
+<section class="hero-section text-white py-5" style="background:linear-gradient(135deg,#B85C00 0%,#7a3c00 60%,#3a1a00 100%);min-height:480px;display:flex;align-items:center;">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <p class="text-uppercase letter-spacing mb-2" style="color:var(--accent);font-size:0.85rem;font-weight:500;">Bangladesh's Premier Mehedi Marketplace</p>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.2;" class="mb-4">
+          Verified Mehedi Artists.<br />
+          <span style="color:var(--accent);">Trusted by NID.</span><br />
+          Loved Across Bangladesh.
+        </h1>
+        <p class="lead mb-4 opacity-75">Every artist on MehediHub is identity-verified through government NID, so you can book with complete confidence.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="/artists" class="btn btn-lg" style="background:var(--accent);color:#3a1a00;font-weight:600;">
+            <i class="bi bi-search me-2"></i>Find an Artist
+          </a>
+          <a href="/register" class="btn btn-lg btn-outline-light">
+            <i class="bi bi-palette me-2"></i>Join as Artist
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 text-center mt-5 mt-lg-0">
+        <div style="font-size:9rem;opacity:0.25;line-height:1;">🌿</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Banner -->
+<section class="py-4" style="background:var(--accent);">
+  <div class="container">
+    <div class="row text-center g-3">
+      <div class="col-4">
+        <h3 class="fw-bold mb-0" style="color:#3a1a00;">500+</h3>
+        <small style="color:#7a4000;">Verified Artists</small>
+      </div>
+      <div class="col-4">
+        <h3 class="fw-bold mb-0" style="color:#3a1a00;">10,000+</h3>
+        <small style="color:#7a4000;">Happy Customers</small>
+      </div>
+      <div class="col-4">
+        <h3 class="fw-bold mb-0" style="color:#3a1a00;">64</h3>
+        <small style="color:#7a4000;">Districts Covered</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5" style="background:#FFF8F0;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 style="font-family:'Playfair Display',serif;color:var(--primary);">How MehediHub Works</h2>
+      <p class="text-muted">Simple, safe, and seamless</p>
+    </div>
+    <div class="row g-4 text-center">
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 p-4">
+          <div class="mb-3" style="font-size:3rem;color:var(--primary);">📋</div>
+          <h5 class="fw-semibold">1. Register with NID</h5>
+          <p class="text-muted small">Upload your NID card. Our OCR system automatically verifies your identity — Bangladesh's first!</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 p-4">
+          <div class="mb-3" style="font-size:3rem;color:var(--primary);">🔍</div>
+          <h5 class="fw-semibold">2. Browse Artists</h5>
+          <p class="text-muted small">Filter by district, specialization, rating, and price to find your perfect Mehedi artist.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 p-4">
+          <div class="mb-3" style="font-size:3rem;color:var(--primary);">📅</div>
+          <h5 class="fw-semibold">3. Book & Confirm</h5>
+          <p class="text-muted small">Choose your date, time and location. The artist confirms within 24 hours.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100 p-4">
+          <div class="mb-3" style="font-size:3rem;color:var(--primary);">✨</div>
+          <h5 class="fw-semibold">4. Get Adorned</h5>
+          <p class="text-muted small">Enjoy beautiful, professional Mehedi and leave a review for the community.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Artists -->
+<% if (featuredArtists.length > 0) { %>
+<section class="py-5" style="background:#fff;">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 style="font-family:'Playfair Display',serif;color:var(--primary);">Featured Artists</h2>
+        <p class="text-muted mb-0">Top-rated, NID-verified Mehedi artists</p>
+      </div>
+      <a href="/artists" class="btn btn-outline-primary-custom">View All <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+    <div class="row g-4">
+      <% featuredArtists.forEach(artist => { %>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card artist-card border-0 shadow-sm h-100">
+          <div class="card-body text-center p-4">
+            <div class="artist-avatar mb-3" style="width:80px;height:80px;border-radius:50%;margin:0 auto;overflow:hidden;border:3px solid var(--accent);">
+              <% if (artist.profile_image) { %>
+                <img src="<%= artist.profile_image %>" alt="<%= artist.full_name %>" class="w-100 h-100" style="object-fit:cover;" />
+              <% } else { %>
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background:var(--accent);font-size:2rem;color:var(--primary);">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+              <% } %>
+            </div>
+            <h5 class="fw-semibold mb-1"><%= artist.full_name %></h5>
+            <p class="text-muted small mb-2"><i class="bi bi-geo-alt me-1"></i><%= artist.district || 'Bangladesh' %></p>
+            <div class="mb-2">
+              <% for (let i = 1; i <= 5; i++) { %>
+                <i class="bi bi-star<%= i <= Math.round(artist.average_rating) ? '-fill' : '' %>" style="color:var(--accent);font-size:0.8rem;"></i>
+              <% } %>
+              <span class="text-muted small ms-1">(<%= artist.total_reviews %>)</span>
+            </div>
+            <p class="small text-muted mb-3"><%= (artist.specialization || 'Mehedi Artist').substring(0, 50) %></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold" style="color:var(--primary);">৳<%= artist.hourly_rate %>/hr</span>
+              <a href="/artists/<%= artist.id %>" class="btn btn-sm btn-primary-custom">View Profile</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Featured Products -->
+<% if (featuredProducts.length > 0) { %>
+<section class="py-5" style="background:#FFF8F0;">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 style="font-family:'Playfair Display',serif;color:var(--primary);">Mehedi Supplies</h2>
+        <p class="text-muted mb-0">Quality products from verified artists</p>
+      </div>
+      <a href="/products" class="btn btn-outline-primary-custom">View All <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+    <div class="row g-3">
+      <% featuredProducts.slice(0,4).forEach(product => { %>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm h-100 product-card">
+          <div style="height:180px;overflow:hidden;">
+            <% if (product.image_url) { %>
+              <img src="<%= product.image_url %>" class="card-img-top h-100 w-100" style="object-fit:cover;" alt="<%= product.name %>" />
+            <% } else { %>
+              <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background:#f5e6d3;font-size:3rem;">🌿</div>
+            <% } %>
+          </div>
+          <div class="card-body">
+            <span class="badge mb-2" style="background:var(--accent);color:#3a1a00;"><%= product.category %></span>
+            <h6 class="fw-semibold mb-1"><%= product.name %></h6>
+            <p class="text-muted small mb-2">by <%= product.artist_name %></p>
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold" style="color:var(--primary);">৳<%= product.price %></span>
+              <a href="/products/<%= product.id %>" class="btn btn-sm btn-outline-primary-custom">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- CTA Section -->
+<section class="py-5 text-center text-white" style="background:linear-gradient(135deg,#B85C00,#7a3c00);">
+  <div class="container">
+    <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;" class="mb-3">Are You a Mehedi Artist?</h2>
+    <p class="lead mb-4 opacity-75">Join thousands of artists earning from their craft. Register with your NID and reach customers across Bangladesh.</p>
+    <a href="/register" class="btn btn-lg" style="background:var(--accent);color:#3a1a00;font-weight:600;">
+      <i class="bi bi-palette me-2"></i>Join MehediHub Today
+    </a>
+  </div>
+</section>

@@ -1,0 +1,128 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      <!-- Progress -->
+      <div class="d-flex align-items-center mb-5">
+        <div class="step-circle done"><i class="bi bi-check"></i></div>
+        <div class="step-line flex-grow-1 active-line"></div>
+        <div class="step-circle active">2</div>
+      </div>
+      <div class="d-flex justify-content-between mb-4">
+        <span class="small text-success fw-semibold"><i class="bi bi-check-circle me-1"></i>NID Uploaded</span>
+        <span class="small fw-semibold" style="color:var(--primary);">Complete Profile</span>
+      </div>
+
+      <div class="card border-0 shadow p-4">
+        <div class="mb-4">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--primary);">Step 2: Complete Your Profile</h3>
+          <p class="text-muted small">Our OCR has pre-filled the fields below. Please verify and correct any errors, then complete your account setup.</p>
+        </div>
+
+        <form action="/register/verify" method="POST">
+          <h6 class="fw-semibold mb-3 pb-2 border-bottom" style="color:var(--primary);">
+            <i class="bi bi-card-text me-2"></i>NID Information (Extracted by OCR — please verify)
+          </h6>
+
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">NID Number *</label>
+              <input type="text" name="nid_number" class="form-control" value="<%= nidData.nidNumber || '' %>" required placeholder="10, 13, or 17 digit NID" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Name on NID</label>
+              <input type="text" name="name_on_nid" class="form-control" value="<%= nidData.name || '' %>" placeholder="As printed on NID" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Date of Birth</label>
+              <input type="date" name="date_of_birth" class="form-control" value="<%= nidData.dateOfBirth || '' %>" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Father's Name</label>
+              <input type="text" name="father_name" class="form-control" value="<%= nidData.fatherName || '' %>" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Mother's Name</label>
+              <input type="text" name="mother_name" class="form-control" value="<%= nidData.motherName || '' %>" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Address</label>
+              <input type="text" name="address" class="form-control" value="<%= nidData.address || '' %>" />
+            </div>
+          </div>
+
+          <!-- NID Images Preview -->
+          <div class="d-flex gap-3 mb-4">
+            <% if (nidData.nidFrontImage) { %>
+            <div class="text-center">
+              <img src="<%= nidData.nidFrontImage %>" class="rounded shadow-sm" style="max-height:100px;max-width:160px;object-fit:contain;" alt="NID Front" />
+              <div class="text-muted small mt-1">Front</div>
+            </div>
+            <% } %>
+            <% if (nidData.nidBackImage) { %>
+            <div class="text-center">
+              <img src="<%= nidData.nidBackImage %>" class="rounded shadow-sm" style="max-height:100px;max-width:160px;object-fit:contain;" alt="NID Back" />
+              <div class="text-muted small mt-1">Back</div>
+            </div>
+            <% } %>
+          </div>
+
+          <!-- OCR Raw Text (debug) -->
+          <details class="mb-4">
+            <summary class="text-muted small cursor-pointer" style="cursor:pointer;">
+              <i class="bi bi-code-square me-1"></i>View raw OCR output (for debugging)
+            </summary>
+            <pre class="mt-2 p-3 rounded small" style="background:#f8f8f8;max-height:200px;overflow:auto;white-space:pre-wrap;font-size:0.75rem;"><%= nidData.rawText || 'No OCR output available.' %></pre>
+          </details>
+
+          <h6 class="fw-semibold mb-3 pb-2 border-bottom" style="color:var(--primary);">
+            <i class="bi bi-person-circle me-2"></i>Account Information
+          </h6>
+
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Full Name *</label>
+              <input type="text" name="full_name" class="form-control" value="<%= nidData.full_name || nidData.name || '' %>" required placeholder="Your full name" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Phone Number *</label>
+              <input type="text" name="phone" class="form-control" value="<%= nidData.phone || '' %>" required placeholder="01XXXXXXXXX" />
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Email Address *</label>
+              <input type="email" name="email" class="form-control" value="<%= nidData.email || '' %>" required placeholder="you@example.com" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Password * <span class="text-muted fw-normal">(min 8 chars)</span></label>
+              <input type="password" name="password" class="form-control" required minlength="8" placeholder="Create a strong password" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Confirm Password *</label>
+              <input type="password" name="confirm_password" class="form-control" required minlength="8" placeholder="Repeat your password" />
+            </div>
+          </div>
+
+          <div class="alert alert-warning small mb-4">
+            <i class="bi bi-clock-history me-2"></i>
+            Your account will be reviewed by our admin team. You'll be able to log in once approved — usually within 24 hours.
+          </div>
+
+          <div class="d-flex gap-3">
+            <a href="/register" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left me-1"></i>Back
+            </a>
+            <button type="submit" class="btn btn-primary-custom flex-grow-1">
+              <i class="bi bi-check-circle me-2"></i>Submit Registration
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.step-circle { width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:0.9rem; }
+.step-circle.active { background:var(--primary);color:#fff; }
+.step-circle.done { background:var(--bs-success);color:#fff; }
+.step-line { height:2px;background:#e0e0e0;margin:0 8px; }
+.step-line.active-line { background:var(--primary); }
+</style>

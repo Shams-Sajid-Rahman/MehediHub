@@ -1,0 +1,44 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:#333;">Manage Products</h4>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr>
+          <th>Product</th>
+          <th>Artist</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (products.length === 0) { %>
+        <tr><td colspan="7" class="text-center text-muted py-4">No products found.</td></tr>
+        <% } %>
+        <% products.forEach(p => { %>
+        <tr>
+          <td>
+            <div class="fw-semibold"><%= p.name %></div>
+            <div class="text-muted small"><%= (p.description || '').substring(0, 50) %></div>
+          </td>
+          <td><%= p.artist_name %></td>
+          <td><span class="badge" style="background:var(--accent);color:#3a1a00;"><%= p.category %></span></td>
+          <td>৳<%= p.price %></td>
+          <td><%= p.stock %></td>
+          <td><span class="badge <%= p.is_active ? 'bg-success' : 'bg-secondary' %>"><%= p.is_active ? 'Active' : 'Inactive' %></span></td>
+          <td>
+            <form action="/admin/products/<%= p.id %>/toggle" method="POST" class="d-inline">
+              <button type="submit" class="btn btn-sm <%= p.is_active ? 'btn-outline-warning' : 'btn-outline-success' %> py-0 px-2">
+                <%= p.is_active ? 'Deactivate' : 'Activate' %>
+              </button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

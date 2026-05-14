@@ -1,0 +1,59 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:var(--primary);">My Bookings</h4>
+
+<% if (bookings.length === 0) { %>
+  <div class="card border-0 shadow-sm p-5 text-center">
+    <i class="bi bi-calendar-check mb-3" style="font-size:3rem;color:var(--primary);opacity:0.4;"></i>
+    <h5>No bookings yet</h5>
+    <p class="text-muted">Find a Mehedi artist and book your appointment!</p>
+    <a href="/artists" class="btn btn-primary-custom mx-auto" style="width:fit-content;">Find Artists</a>
+  </div>
+<% } else { %>
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead style="background:#fff8f0;">
+          <tr>
+            <th>Artist</th>
+            <th>Service</th>
+            <th>Event Date</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% bookings.forEach(b => { %>
+          <tr>
+            <td class="fw-semibold small"><%= b.artist_name %></td>
+            <td>
+              <div class="small"><%= b.service_title %></div>
+              <span class="badge" style="background:var(--accent);color:#3a1a00;font-size:0.65rem;"><%= b.service_category %></span>
+            </td>
+            <td class="small">
+              <%= new Date(b.event_date).toLocaleDateString('en-BD') %>
+              <div class="text-muted"><%= b.event_time ? b.event_time.substring(0, 5) : '' %></div>
+            </td>
+            <td class="fw-semibold small" style="color:var(--primary);">৳<%= b.total_price %></td>
+            <td>
+              <span class="badge <%=
+                b.status === 'completed' ? 'bg-success' :
+                b.status === 'confirmed' ? 'bg-primary' :
+                b.status === 'pending' ? 'bg-warning text-dark' :
+                b.status === 'cancelled' ? 'bg-secondary' : 'bg-danger' %>">
+                <%= b.status %>
+              </span>
+            </td>
+            <td>
+              <% if (['pending', 'confirmed'].includes(b.status)) { %>
+              <form action="/customer/bookings/<%= b.id %>/cancel" method="POST" onsubmit="return confirm('Cancel this booking?')">
+                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2">Cancel</button>
+              </form>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% } %>

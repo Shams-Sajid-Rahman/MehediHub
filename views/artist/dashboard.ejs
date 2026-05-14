@@ -1,0 +1,79 @@
+<h4 class="mb-4" style="font-family:'Playfair Display',serif;color:var(--primary);">Welcome, <%= currentUser.name.split(' ')[0] %>!</h4>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid var(--primary)!important;">
+      <div class="text-muted small">Total Bookings</div>
+      <div class="h3 fw-bold mb-0" style="color:var(--primary);"><%= stats.totalBookings %></div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid #ffc107!important;">
+      <div class="text-muted small">Pending Bookings</div>
+      <div class="h3 fw-bold mb-0 text-warning"><%= stats.pendingBookings %></div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid #28a745!important;">
+      <div class="text-muted small">Total Earnings</div>
+      <div class="h3 fw-bold mb-0 text-success">৳<%= Number(stats.earnings).toLocaleString() %></div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm p-4" style="border-left:4px solid var(--accent)!important;">
+      <div class="text-muted small">Average Rating</div>
+      <div class="h3 fw-bold mb-0" style="color:#B85C00;"><%= Number(stats.avgRating).toFixed(1) %> ★</div>
+      <div class="text-muted small"><%= stats.totalReviews %> review(s)</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-3 mb-4">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm p-3">
+      <h6 class="fw-semibold mb-3">Quick Actions</h6>
+      <div class="d-flex gap-2 flex-wrap">
+        <a href="/artist/services/new" class="btn btn-primary-custom btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Service</a>
+        <a href="/artist/products/new" class="btn btn-outline-primary-custom btn-sm"><i class="bi bi-plus-circle me-1"></i>Add Product</a>
+        <a href="/artist/portfolio" class="btn btn-outline-secondary btn-sm"><i class="bi bi-images me-1"></i>Portfolio</a>
+        <a href="/artist/bookings" class="btn btn-outline-warning btn-sm"><i class="bi bi-calendar-check me-1"></i>View Bookings</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Bookings -->
+<div class="card border-0 shadow-sm p-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h6 class="fw-semibold mb-0">Recent Bookings</h6>
+    <a href="/artist/bookings" class="btn btn-sm btn-outline-secondary">View All</a>
+  </div>
+  <% if (recentBookings.length === 0) { %>
+    <p class="text-muted small">No bookings yet.</p>
+  <% } else { %>
+  <div class="table-responsive">
+    <table class="table table-hover table-sm mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr><th>Customer</th><th>Service</th><th>Event Date</th><th>Price</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <% recentBookings.forEach(b => { %>
+        <tr>
+          <td class="small fw-semibold"><%= b.customer_name %></td>
+          <td class="small"><%= b.service_title %></td>
+          <td class="small"><%= new Date(b.event_date).toLocaleDateString('en-BD') %></td>
+          <td class="small">৳<%= b.total_price %></td>
+          <td>
+            <span class="badge <%= b.status === 'completed' ? 'bg-success' : b.status === 'confirmed' ? 'bg-primary' : b.status === 'pending' ? 'bg-warning text-dark' : 'bg-secondary' %>">
+              <%= b.status %>
+            </span>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
+</div>

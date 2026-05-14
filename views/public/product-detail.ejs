@@ -1,0 +1,103 @@
+<div class="container py-5">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/" style="color:var(--primary);">Home</a></li>
+      <li class="breadcrumb-item"><a href="/products" style="color:var(--primary);">Products</a></li>
+      <li class="breadcrumb-item active"><%= product.name %></li>
+    </ol>
+  </nav>
+
+  <div class="row g-5">
+    <div class="col-md-5">
+      <% if (product.image_url) { %>
+        <img src="<%= product.image_url %>" class="img-fluid rounded shadow" alt="<%= product.name %>" style="width:100%;" />
+      <% } else { %>
+        <div class="rounded shadow d-flex align-items-center justify-content-center" style="height:350px;background:#f5e6d3;font-size:6rem;">🌿</div>
+      <% } %>
+    </div>
+    <div class="col-md-7">
+      <span class="badge mb-2" style="background:var(--accent);color:#3a1a00;"><%= product.category %></span>
+      <h2 style="font-family:'Playfair Display',serif;" class="mb-2"><%= product.name %></h2>
+      <p class="text-muted mb-3">By <a href="/artists/<%= product.artist_db_id %>" style="color:var(--primary);" class="fw-semibold"><%= product.artist_name %></a></p>
+      <div class="h4 fw-bold mb-3" style="color:var(--primary);">৳<%= product.price %></div>
+      <p class="mb-4"><%= product.description %></p>
+      <div class="mb-4">
+        <span class="text-muted small"><i class="bi bi-box-seam me-1"></i>In Stock: <%= product.stock %> units</span>
+      </div>
+
+      <% if (canAddToCart && product.stock > 0) { %>
+      <form action="/customer/cart/add" method="POST" class="d-flex gap-3 mb-4">
+        <input type="hidden" name="product_id" value="<%= product.id %>" />
+        <div style="width:100px;">
+          <input type="number" name="quantity" value="1" min="1" max="<%= product.stock %>" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary-custom">
+          <i class="bi bi-cart-plus me-2"></i>Add to Cart
+        </button>
+      </form>
+      <% } else if (!canAddToCart) { %>
+        <a href="/login" class="btn btn-outline-primary-custom mb-4">
+          <i class="bi bi-person me-2"></i>Login to Purchase
+        </a>
+      <% } else { %>
+        <div class="alert alert-warning mb-4">Out of stock.</div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Reviews -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 style="font-family:'Playfair Display',serif;color:var(--primary);" class="mb-4">Customer Reviews (<%= reviews.length %>)</h4>
+      <% if (reviews.length === 0) { %>
+        <p class="text-muted">No reviews yet.</p>
+      <% } else { %>
+        <% reviews.forEach(review => { %>
+        <div class="card border-0 shadow-sm p-3 mb-3">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:var(--primary);font-weight:600;">
+              <%= review.customer_name.charAt(0).toUpperCase() %>
+            </div>
+            <div>
+              <div class="fw-semibold"><%= review.customer_name %></div>
+              <div>
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <i class="bi bi-star<%= i <= review.rating ? '-fill' : '' %>" style="color:var(--accent);"></i>
+                <% } %>
+              </div>
+            </div>
+            <div class="ms-auto text-muted small"><%= new Date(review.created_at).toLocaleDateString('en-BD') %></div>
+          </div>
+          <% if (review.comment) { %><p class="text-muted mb-0"><%= review.comment %></p><% } %>
+        </div>
+        <% }) %>
+      <% } %>
+
+      <% if (canAddToCart) { %>
+      <div class="card border-0 shadow-sm p-4 mt-3">
+        <h6 class="fw-semibold mb-3">Write a Review</h6>
+        <form action="/customer/reviews/product/<%= product.id %>" method="POST">
+          <div class="row g-2">
+            <div class="col-md-4">
+              <select name="rating" class="form-select form-select-sm" required>
+                <option value="">Rating</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="1">⭐</option>
+              </select>
+            </div>
+            <div class="col-md-8">
+              <input type="text" name="comment" class="form-control form-control-sm" placeholder="Your review..." />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-sm btn-primary-custom">Submit Review</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>

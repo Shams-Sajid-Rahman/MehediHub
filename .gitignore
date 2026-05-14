@@ -1,0 +1,12 @@
+node_modules/
+.env
+public/uploads/nid/*
+public/uploads/profiles/*
+public/uploads/portfolio/*
+public/uploads/products/*
+!public/uploads/nid/.gitkeep
+!public/uploads/profiles/.gitkeep
+!public/uploads/portfolio/.gitkeep
+!public/uploads/products/.gitkeep
+*.log
+.DS_Store

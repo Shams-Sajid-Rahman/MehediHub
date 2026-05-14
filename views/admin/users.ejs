@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 style="font-family:'Playfair Display',serif;color:#333;">Manage Users</h4>
+</div>
+
+<!-- Filters -->
+<div class="card border-0 shadow-sm p-3 mb-4">
+  <form method="GET" action="/admin/users" class="row g-2 align-items-end">
+    <div class="col-md-3">
+      <input type="text" name="search" class="form-control form-control-sm" placeholder="Search name/email..." value="<%= filters.search || '' %>" />
+    </div>
+    <div class="col-md-2">
+      <select name="role" class="form-select form-select-sm">
+        <option value="">All Roles</option>
+        <option value="admin" <%= filters.role === 'admin' ? 'selected' : '' %>>Admin</option>
+        <option value="artist" <%= filters.role === 'artist' ? 'selected' : '' %>>Artist</option>
+        <option value="customer" <%= filters.role === 'customer' ? 'selected' : '' %>>Customer</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select name="status" class="form-select form-select-sm">
+        <option value="">All Status</option>
+        <option value="pending" <%= filters.status === 'pending' ? 'selected' : '' %>>Pending</option>
+        <option value="active" <%= filters.status === 'active' ? 'selected' : '' %>>Active</option>
+        <option value="suspended" <%= filters.status === 'suspended' ? 'selected' : '' %>>Suspended</option>
+        <option value="rejected" <%= filters.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary btn-sm w-100">Filter</button>
+    </div>
+    <div class="col-md-2">
+      <a href="/admin/users" class="btn btn-outline-secondary btn-sm w-100">Clear</a>
+    </div>
+  </form>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead style="background:#f8f9fa;">
+        <tr>
+          <th>User</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Joined</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (users.length === 0) { %>
+        <tr><td colspan="5" class="text-center text-muted py-4">No users found.</td></tr>
+        <% } %>
+        <% users.forEach(user => { %>
+        <tr>
+          <td>
+            <div class="fw-semibold"><%= user.full_name %></div>
+            <div class="text-muted small"><%= user.email %></div>
+            <div class="text-muted small"><%= user.phone || '' %></div>
+          </td>
+          <td><span class="badge <%= user.role === 'admin' ? 'bg-dark' : user.role === 'artist' ? 'bg-primary' : 'bg-info' %>"><%= user.role %></span></td>
+          <td>
+            <span class="badge <%= user.status === 'active' ? 'bg-success' : user.status === 'pending' ? 'bg-warning text-dark' : user.status === 'rejected' ? 'bg-danger' : 'bg-secondary' %>">
+              <%= user.status %>
+            </span>
+          </td>
+          <td class="text-muted small"><%= new Date(user.created_at).toLocaleDateString('en-BD') %></td>
+          <td>
+            <div class="d-flex gap-1">
+              <% if (user.status === 'active') { %>
+              <form action="/admin/users/<%= user.id %>/status" method="POST">
+                <input type="hidden" name="status" value="suspended" />
+                <button type="submit" class="btn btn-sm btn-warning py-0 px-2">Suspend</button>
+              </form>
+              <% } else if (user.status === 'suspended' || user.status === 'pending') { %>
+              <form action="/admin/users/<%= user.id %>/status" method="POST">
+                <input type="hidden" name="status" value="active" />
+                <button type="submit" class="btn btn-sm btn-success py-0 px-2">Activate</button>
+              </form>
+              <% } %>
+              <% if (user.role !== 'admin') { %>
+              <form action="/admin/users/<%= user.id %>/delete" method="POST" onsubmit="return confirm('Delete this user? This cannot be undone.')">
+                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2">Delete</button>
+              </form>
+              <% } %>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

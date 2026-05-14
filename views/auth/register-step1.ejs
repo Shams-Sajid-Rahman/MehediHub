@@ -1,0 +1,134 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <!-- Progress Steps -->
+      <div class="d-flex align-items-center mb-5">
+        <div class="step-circle active">1</div>
+        <div class="step-line flex-grow-1"></div>
+        <div class="step-circle inactive">2</div>
+      </div>
+      <div class="d-flex justify-content-between mb-4">
+        <span class="small fw-semibold" style="color:var(--primary);">Upload NID</span>
+        <span class="small text-muted">Complete Profile</span>
+      </div>
+
+      <div class="card border-0 shadow p-4">
+        <div class="text-center mb-4">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--primary);">Create Your Account</h3>
+          <p class="text-muted small">Step 1 of 2: Upload your National ID Card for verification</p>
+        </div>
+
+        <!-- NID Explainer -->
+        <div class="alert border-0 mb-4" style="background:#fff8f0;border-left:4px solid var(--primary)!important;border-left-style:solid!important;">
+          <h6 class="fw-semibold mb-2" style="color:var(--primary);"><i class="bi bi-shield-check me-2"></i>Why NID Verification?</h6>
+          <ul class="small text-muted mb-0 ps-3">
+            <li>Ensures all users are real, verified individuals</li>
+            <li>Protects customers and artists from fraud</li>
+            <li>Bangladesh's first NID-OCR verified marketplace</li>
+          </ul>
+        </div>
+
+        <form action="/register" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">I want to register as *</label>
+            <div class="d-flex gap-3">
+              <label class="flex-grow-1">
+                <input type="radio" name="role" value="customer" class="d-none role-radio" id="role-customer" />
+                <div class="role-card p-3 border rounded text-center cursor-pointer" data-role="customer">
+                  <i class="bi bi-person-heart d-block mb-1" style="font-size:1.8rem;color:var(--primary);"></i>
+                  <div class="fw-semibold small">Customer</div>
+                  <div class="text-muted" style="font-size:0.7rem;">Book artists & buy products</div>
+                </div>
+              </label>
+              <label class="flex-grow-1">
+                <input type="radio" name="role" value="artist" class="d-none role-radio" id="role-artist" />
+                <div class="role-card p-3 border rounded text-center cursor-pointer" data-role="artist">
+                  <i class="bi bi-palette d-block mb-1" style="font-size:1.8rem;color:var(--primary);"></i>
+                  <div class="fw-semibold small">Artist</div>
+                  <div class="text-muted" style="font-size:0.7rem;">Offer Mehedi services & products</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <hr class="my-3" />
+          <p class="small fw-semibold mb-3" style="color:var(--primary);"><i class="bi bi-person-circle me-1"></i>Your Basic Information</p>
+
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Full Name *</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input type="text" name="full_name" class="form-control" placeholder="Your full name" required />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Phone Number *</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                <input type="text" name="phone" class="form-control" placeholder="01XXXXXXXXX" required />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Email Address *</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" name="email" class="form-control" placeholder="you@example.com" required />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small fw-semibold">Location</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                <input type="text" name="location" class="form-control" placeholder="e.g. Mirpur, Dhaka" />
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-3" />
+          <p class="small fw-semibold mb-3" style="color:var(--primary);"><i class="bi bi-card-text me-1"></i>NID Verification</p>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">NID Front Image *</label>
+            <input type="file" name="nid_front" class="form-control" accept="image/*" required />
+            <div class="form-text">Upload a clear photo of the front of your NID card (max 5MB)</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">NID Back Image <span class="text-muted fw-normal">(Recommended)</span></label>
+            <input type="file" name="nid_back" class="form-control" accept="image/*" />
+            <div class="form-text">Upload the back of your NID card for better data extraction</div>
+          </div>
+
+          <div class="alert alert-info small mb-4">
+            <i class="bi bi-info-circle me-2"></i>
+            After uploading, our OCR system will extract your information automatically. You can log in right away — NID approval runs in the background.
+          </div>
+
+          <button type="submit" class="btn btn-primary-custom w-100">
+            <i class="bi bi-upload me-2"></i>Upload & Continue
+          </button>
+        </form>
+        <p class="text-center text-muted small mt-3 mb-0">
+          Already have an account? <a href="/login" style="color:var(--primary);">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.step-circle { width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:0.9rem; }
+.step-circle.active { background:var(--primary);color:#fff; }
+.step-circle.inactive { background:#e0e0e0;color:#999; }
+.step-line { height:2px;background:#e0e0e0;margin:0 8px; }
+.role-card { cursor:pointer;transition:all 0.2s; }
+.role-card:hover,.role-card.selected { border-color:var(--primary)!important;background:#fff8f0; }
+</style>
+<script>
+document.querySelectorAll('.role-radio').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    radio.nextElementSibling.classList.add('selected');
+  });
+});
+</script>
